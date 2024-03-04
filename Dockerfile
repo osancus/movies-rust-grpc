@@ -1,4 +1,4 @@
-FROM rust:1.64.0-buster as builder
+FROM rust:1.70.0-buster as builder
 
 # install protobuf
 RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev
@@ -8,7 +8,6 @@ COPY src /usr/src/app/src/
 COPY proto /usr/src/app/proto/
 WORKDIR /usr/src/app
 RUN rustup target add x86_64-unknown-linux-musl
-RUN rustup default 1.70.0
 RUN cargo build --target x86_64-unknown-linux-musl --release --bin movies-back
 
 FROM gcr.io/distroless/static-debian11 as runner
